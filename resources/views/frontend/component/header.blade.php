@@ -21,10 +21,11 @@
                         <li><a href="/" class="active">Home</a></li>
                         {{--<li><a href="about.html">About</a></li>--}}
                         @if(\Illuminate\Support\Facades\Session::get('customer_isLogin'))
+                            <li><a href="/customer/profile">My Profile</a></li>
                             <li><a href="/customer/transaction">My Transaction</a></li>
-                            <li><a href="/customer/logout">Logout</a></li>
+                            <li><a href="/logout">Logout</a></li>
                         @else
-                            <li><a href="/customer/login">Login / Register</a></li>
+                            <li><a href="/login">Login / Register</a></li>
                         @endif
                     </ul>
                 </nav>

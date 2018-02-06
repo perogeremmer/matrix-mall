@@ -27,6 +27,8 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'checkUserLogin'], function (){
     Route::get('customer/transaction','transactionController@customerTransaction');
+    Route::get('customer/profile','customerController@profile');
+    Route::post('update/customer/{id}','customerController@update');
     Route::resource('customer','customerController');
     Route::resource('shop','shopController');
     Route::get('shop/category/{id}','shopController@category_detail');

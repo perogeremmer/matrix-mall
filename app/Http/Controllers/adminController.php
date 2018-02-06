@@ -11,6 +11,17 @@ use Illuminate\Support\Facades\Session;
 class adminController extends Controller
 {
 
+    public function update($id){
+        try{
+            $data['homepage'] = FALSE;
+            $data['supplier'] = supplierModel::where('status',0)->get();
+            return redirect('/suppliers')->with($data);
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('response-error', $e->getMessage());
+        }
+    }
+
     public function suppliers(){
         try{
             $data['homepage'] = FALSE;

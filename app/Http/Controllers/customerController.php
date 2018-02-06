@@ -82,42 +82,65 @@ class customerController extends Controller
     public function show($id)
     {
         //
-        print_r('heee');
     }
-//
-//    /**
-//     * Show the form for editing the specified resource.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function edit($id)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Update the specified resource in storage.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function update(Request $request, $id)
-//    {
-//        //
-//    }
-//
-//    /**
-//     * Remove the specified resource from storage.
-//     *
-//     * @param  int  $id
-//     * @return \Illuminate\Http\Response
-//     */
-//    public function destroy($id)
-//    {
-//        //
-//    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    public function profile()
+    {
+        try{
+            $cust = customerModel::where('id',Session::get('customer_id'))->first();
+            $data['customer'] = $cust;
+            $data['homepage'] = FALSE;
+            //$this->email->registration($request->name,$request->email,$code);
+            return view('frontend.customer.profile')->with($data);
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('response-error', $e->getMessage());
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        try{
+            $this->validate($request, [
+                'confirmation_password' => 'same:password',
+            ]);
+
+            $data = customerModel::where('id',decrypt($id))->first();
+            $data->name = $request->name;
+            $data->email = $request->email;
+            if(empty($request->password)){
+                $data->password = $data->password;
+            }
+            else{
+                $data->password = bcrypt($request->password);
+            }
+            $data->address = $request->address;
+            $data->save();
+            return redirect()->back()->with('response','Sucessfull update data!');
+
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('response-error', $e->getMessage());
+        }
+    }
 
     public function login(){
         try{

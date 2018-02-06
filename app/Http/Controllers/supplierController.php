@@ -90,7 +90,7 @@ class supplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function profile()
     {
         try{
             $supplier = supplierModel::where('id',Session::get('supplier_id'))->first();
@@ -98,11 +98,11 @@ class supplierController extends Controller
             $data['supplier'] = $supplier;
             $data['type'] = $type;
             //$this->email->registration($request->name,$request->email,$code);
-            return view('backends.')->with($data);
+            return view('backends.supplier.edit_profile')->with($data);
 
         }
         catch (\Exception $e){
-            return redirect('supplier-register')->with('response-error', $e->getMessage());
+            return redirect()->back()->with('response-error', $e->getMessage());
         }
     }
 
@@ -115,7 +115,30 @@ class supplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $this->validate($request, [
+                'confirmation_password' => 'same:password',
+            ]);
+
+            $data = supplierModel::where('id',decrypt($id))->first();
+            $data->name = $request->name;
+            $data->slogan = $request->slogan;
+            $data->email = $request->email;
+            if(empty($request->password)){
+                $data->password = $data->password;
+            }
+            else{
+                $data->password = bcrypt($request->password);
+            }
+            $data->address = $request->address;
+            $data->supplier_type = $data->supplier_type;
+            $data->save();
+            return redirect('supplier/product')->with('response','Sucessfull update data!');
+
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('response-error', $e->getMessage());
+        }
     }
 
     /**

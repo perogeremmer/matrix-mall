@@ -2,7 +2,7 @@
 @section('content')
     <div id="page-wrapper">
         <div class="main-page">
-            <h2 class="hdg">Daftar Produk</h2>
+            <h2 class="hdg">Transaction Not Proccess</h2>
             <div class="bottom-table">
                 <div class="bs-docs-example">
                     @include('backends.alert')
@@ -10,18 +10,19 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Product Code</th>
-                            <th>Product Type</th>
-                            <th>Product Name</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                            <th>Created At</th>
+                            <th>Transaction Code</th>
+                            <th>Customer</th>
+                            <th>Supplier</th>
+                            <th>Product</th>
+                            <th>Count</th>
+                            <th>Notes</th>
+                            <th>Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         @php $no = 1 @endphp
-                        @foreach($product as $item)
+                        @foreach($transaction as $item)
                         <tr>
                             <td>{{ $no++ }}</td>
                             <td>{{ $item->product_code }}</td>

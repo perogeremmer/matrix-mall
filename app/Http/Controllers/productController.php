@@ -19,8 +19,21 @@ class productController extends Controller
     public function index()
     {
         try{
-            $data['product'] = productModel::where('supplier_id',Session::get('supplier_id'))->get();
-            return view('backends.supplier.product.show')->with($data);
+            $supplier = supplierModel::where('id',Session::get('supplier_id'))->first();
+            $data['product_type'] = productTypeModel::where('supplier_type', $supplier->supplier_type)->get();
+            return view('backends.supplier.product.type')->with($data);
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('response-error',$e->getMessage());
+        }
+    }
+
+    public function type()
+    {
+        try{
+            $supplier = supplierModel::where('id',Session::get('supplier_id'))->first();
+            $data['product_type'] = productTypeModel::where('supplier_type', $supplier->supplier_type)->get();
+            return view('backends.supplier.product.type')->with($data);
         }
         catch (\Exception $e){
             return redirect()->back()->with('response-error',$e->getMessage());
@@ -66,7 +79,7 @@ class productController extends Controller
             $data->price = $request->price;
             $data->supplier_id = Session::get('supplier_id');
             $data->save();
-            return redirect()->route('product.index')->with('response', 'Berhasil Menambahkan Data!');
+            return redirect()->route('product.show',encrypt($request->product_type))->with('response', 'Berhasil Menambahkan Data!');
         }
         catch (\Exception $e){
             return redirect()->back()->with('response-error', $e->getMessage());
@@ -81,7 +94,14 @@ class productController extends Controller
      */
     public function show($id)
     {
-        //
+        try{
+            $ids = decrypt($id);
+            $data['product'] = productModel::where('supplier_id',Session::get('supplier_id'))->where('product_type',$ids)->get();
+            return view('backends.supplier.product.show')->with($data);
+        }
+        catch (\Exception $e){
+            return redirect()->back()->with('response-error',$e->getMessage());
+        }
     }
 
     /**
@@ -121,13 +141,14 @@ class productController extends Controller
 
             $data = productModel::where('id',decrypt($id))->first();
             $data->name = $request->name;
+            $ids = $data->product_type;
             $data->product_type = $data->product_type;
             $data->product_code = $data->product_code;
             $data->price = $request->price;
             $data->supplier_id = Session::get('supplier_id');
             $data->status = $request->product_status;
             $data->save();
-            return redirect()->route('product.index')->with('response', 'Berhasil Mengubah Data!');
+            return redirect()->route('product.show',encrypt($ids))->with('response', 'Berhasil Mengubah Data!');
         }
         catch (\Exception $e){
             return redirect()->back()->with('response-error', $e->getMessage());

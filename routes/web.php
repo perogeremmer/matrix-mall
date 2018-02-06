@@ -17,8 +17,7 @@ Route::get('/', function () {
 
 
 Route::prefix('supplier')->group(function () {
-    Route::get('product', 'supplierController@register');
-
+    //Route::get('product', 'supplierController@register');
     Route::resource('supplier','supplierController');
     Route::resource('product','productController');
 

@@ -15,10 +15,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/form', function () {
-    return view('backends.login');
+
+Route::prefix('supplier')->group(function () {
+    Route::get('product', 'supplierController@register');
+
+    Route::resource('supplier','supplierController');
+    Route::resource('product','productController');
+
+    Route::get('login', 'supplierController@login');
+    Route::get('logout', 'supplierController@logout');
+    Route::post('check_login', 'supplierController@check_login');
+    Route::get('register', 'supplierController@register');
 });
 
-Route::resource('supplier','supplierController');
 
 

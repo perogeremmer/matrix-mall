@@ -12,14 +12,14 @@
                         <li class="dropdown profile_details_drop">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 <div class="profile_img">
-                                    <span class="prfil-img"><img class="fa fa-cog" src="images/a.png" alt=""> </span>
+                                    <span class="prfil-img"><img class="fa fa-cog" src="/assets/backends/images/user.png" style="height: 50px; width: 50px;" alt=""> </span>
                                     <div class="clearfix"></div>
                                 </div>
                             </a>
                             <ul class="dropdown-menu drp-mnu">
-                                <li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>
+                                {{--<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>--}}
                                 <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li>
-                                <li> <a href="#"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                <li> <a href="/supplier/logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
                             </ul>
                         </li>
                     </ul>

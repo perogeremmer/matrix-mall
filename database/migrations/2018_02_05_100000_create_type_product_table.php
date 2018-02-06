@@ -18,7 +18,6 @@ class CreateTypeProductTable extends Migration
             $table->string('name');
             $table->integer('supplier_type')->unsigned();
             $table->timestamps();
-
             $table->foreign('supplier_type')->references('id')->on('supplier_type');
         });
     }

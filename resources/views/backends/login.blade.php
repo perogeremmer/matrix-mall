@@ -52,18 +52,13 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
                         </ul>
                     </div>
                 @endif
-                <form action="{{route('supplier.store')}}" method="post">
+                @include('backends.alert')
+                <form action="/supplier/check_login" method="post">
                     {{ csrf_field() }}
-                    <input type="text" class="pass" name="name" placeholder="Name">
-                    <input type="text" class="pass" name="email" placeholder="Email">
-                    <input type="text" class="pass" name="slogan" placeholder="Supplier Slogan">
+                    <input type="text" class="pass" name="code" placeholder="Email">
                     <input type="password" class="pass" name="password" placeholder="Password">
-                    <input type="password" class="pass" name="confirmation password" placeholder="Confirmation Password">
-                    <br>
-                    <textarea placeholder="Address" class="pass"></textarea>
-                    <hr>
                     <div class="clearfix"></div>
-                    <button class="btn btn-info btn-block" type="submit">Sign in</button>
+                    <button class="btn btn-info btn-block" type="submit">Sign Up</button>
                 </form>
             </div>
         </div>

@@ -15,6 +15,7 @@ class CreateTypeSupplier extends Migration
     {
         Schema::create('supplier_type', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }

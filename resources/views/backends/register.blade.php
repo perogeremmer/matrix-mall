@@ -41,24 +41,37 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <div id="page-wrapper">
         <div class="main-page" style="margin-left: 150pt">
             <div class="login-form">
-                <h4>Register</h4>
-                <form>
-                    <input type="text" placeholder="Username" required>
-                    <input type="password" class="pass" placeholder="Password" required>
-                    <span class="check-left"><input type="checkbox">Remember me</span>
-                    <span class="check-right"><a href="#">Forgot password?</a></span>
+                <h4>Sign Up</h4>
+                <h5><strong>Welcome</strong> sign up to get started!</h5>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @include('backends.alert')
+                <form action="{{route('supplier.store')}}" method="post">
+                    {{ csrf_field() }}
+                    <input type="text" class="pass" name="name" placeholder="Name">
+                    <input type="text" class="pass" name="email" placeholder="Email">
+                    <input type="text" class="pass" name="slogan" placeholder="Supplier Slogan">
+                    <select class="pass form-control" name="supplier_type">
+                            <option selected="selected"> --- Supplier Type ---</option>
+                        @foreach($supplier_type as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                        @endforeach
+                    </select>
+                    <input type="password" class="pass" name="password" placeholder="Password">
+                    <input type="password" class="pass" name="confirmation_password" placeholder="Confirmation Password">
+                    <br>
+                    <textarea placeholder="Address"  name="address" class="pass form-control"></textarea>
+                    <hr>
                     <div class="clearfix"></div>
-                    <button class="btn btn-info btn-block" type="submit">Sign in</button>
-                    <p class="center-block mg-t mg-b text-center">OR</p>
-                    <a class="btn btn-primary btn-block mg-b-sm">
-                        <i class="fa fa-facebook mg-r-md pull-left pd-l-md pd-r-md pd-t-xs"></i>Login with Facebook
-                    </a>
-                    <a class="btn btn-info btn-block">
-                        <i class="fa fa-twitter mg-r-md pull-left pd-l-md pd-r-md pd-t-xs"></i>Login with Twitter
-                    </a>
-                    <p class="center-block mg-t mg-b">Dont have and account?
-                        <a href="signup.html">Signup here.</a>
-                    </p>
+                    <button class="btn btn-info btn-block" type="submit">Sign Up</button>
                 </form>
             </div>
         </div>
@@ -66,7 +79,7 @@ SmartPhone Compatible web template, free WebDesigns for Nokia, Samsung, LG, Sony
     <!--typo-ends-->
 
     <div class="copy-section">
-        <p>&copy; 2016 Ultra Modern. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+        <p>&copy; 2018 Matrix Mall. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
     </div>
 </div>
 <!-- Classie -->

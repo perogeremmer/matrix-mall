@@ -19,6 +19,31 @@
                         </ul>
                         <!-- /nav-second-level -->
                     </li>
+                    <li>
+                        <a href="#"><i class="fa fa-cogs nav_icon"></i>Transaction <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li>
+                                <a href="/supplier/transaction/un-process">List of Not Process Transaction</a>
+                            </li>
+                            <li>
+                                <a href="/supplier/transaction/on-process">List of On Process Transaction</a>
+                            </li>
+                        </ul>
+                        <!-- /nav-second-level -->
+                    </li>
+                    @else
+                        <li>
+                            <a href="#"><i class="fa fa-home nav_icon"></i>Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-cogs nav_icon"></i>Suppliers <span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li>
+                                    <a href="/admin/supplier">List of Suppliers</a>
+                                </li>
+                            </ul>
+                            <!-- /nav-second-level -->
+                        </li>
                     @endif
                 </ul>
             </div>

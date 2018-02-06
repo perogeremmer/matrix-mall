@@ -92,7 +92,18 @@ class supplierController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $supplier = supplierModel::where('id',Session::get('supplier_id'))->first();
+            $type = supplierTypeModel::all();
+            $data['supplier'] = $supplier;
+            $data['type'] = $type;
+            //$this->email->registration($request->name,$request->email,$code);
+            return view('backends.')->with($data);
+
+        }
+        catch (\Exception $e){
+            return redirect('supplier-register')->with('response-error', $e->getMessage());
+        }
     }
 
     /**
@@ -140,7 +151,7 @@ class supplierController extends Controller
 
     public function check_login(Request $request){
         try{
-            $data = supplierModel::where('supplier_code',$request->code)->first();
+            $data = supplierModel::where('supplier_code',$request->code)->where('status',1)->first();
 
             if($data){
                 if(Hash::check($request->password,$data->password)){

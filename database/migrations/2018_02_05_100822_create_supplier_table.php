@@ -22,8 +22,8 @@ class CreateSupplierTable extends Migration
             $table->integer('supplier_type')->unsigned();
             $table->string('slogan');
             $table->string('supplier_code');
+            $table->string('status',1)->default(0)->comment('0 tidak aktif false 1 aktif true');
             $table->timestamps();
-
             $table->foreign('supplier_type')->references('id')->on('supplier_type');
 
         });

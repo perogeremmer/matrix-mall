@@ -2,7 +2,7 @@
 @section('content')
     <div id="page-wrapper">
         <div class="main-page">
-            <h2 class="hdg">Transaction Not Proccess</h2>
+            <h2 class="hdg">Transaction {{ $notes }}</h2>
             <div class="bottom-table">
                 <div class="bs-docs-example">
                     @include('backends.alert')
@@ -12,12 +12,13 @@
                             <th>No.</th>
                             <th>Transaction Code</th>
                             <th>Customer</th>
-                            <th>Supplier</th>
                             <th>Product</th>
                             <th>Count</th>
                             <th>Notes</th>
                             <th>Date</th>
+                            @if($action)
                             <th>Action</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -25,26 +26,19 @@
                         @foreach($transaction as $item)
                         <tr>
                             <td>{{ $no++ }}</td>
-                            <td>{{ $item->product_code }}</td>
-                            @foreach(\App\productTypeModel::where('id',$item->product_type)->get() as $value)
+                            <td>{{ $item->transaction_code }}</td>
+                            @foreach(\App\customerModel::where('id',$item->customer_id)->get() as $value)
                             <td>{{ $value->name }}</td>
                             @endforeach
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->price }}</td>
-                            <td>
-                                @if($item->status == 1)
-                                    Available
-                                @else
-                                    Not Available
-                                @endif
-                            </td>
+                            @foreach(\App\productModel::where('id',$item->product_id)->get() as $value)
+                                <td>{{ $value->name }}</td>
+                            @endforeach
+                            <td>{{ $item->count }}</td>
+                            <td>{{ $item->notes }}</td>
                             <td>{{ $item->created_at }}</td>
-                            <td><form method="post" action="{{ route('product.destroy',encrypt($item->id)) }}">
-                                    {{csrf_field()}}
-                                    {{method_field('DELETE')}}
-                                    <a href="{{ route('product.edit',encrypt($item->id)) }}" class="btn btn-sm btn-primary">Edit</a>
-                                    <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
-                                </form></td>
+                            @if($action)
+                                <td><a href="/supplier/transaction/processing/{{ encrypt($item->id) }}" onclick="return confirm('Are you already process this transaction?')" class="btn btn-sm btn-primary">Process</a> </td>
+                            @endif
                         </tr>
                         @endforeach
                         </tbody>

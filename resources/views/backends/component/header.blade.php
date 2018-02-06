@@ -18,8 +18,12 @@
                             </a>
                             <ul class="dropdown-menu drp-mnu">
                                 {{--<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li>--}}
-                                <li> <a href="#"><i class="fa fa-user"></i> Profile</a> </li>
+                                @if(\Illuminate\Support\Facades\Session::get('supplier_isLogin'))
+                                <li> <a href="/supplier/profile"><i class="fa fa-user"></i> Profile</a> </li>
                                 <li> <a href="/supplier/logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                @else
+                                    <li> <a href="/admin/logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+                                @endif
                             </ul>
                         </li>
                     </ul>
